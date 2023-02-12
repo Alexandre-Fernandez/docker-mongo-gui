@@ -1,0 +1,22 @@
+---
+version: "3.7"
+
+services:
+  mongo:
+    image: mongo:latest # :6.0.4
+    ports:
+      - 27017:27017
+    volumes:
+      - ./db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+  gui:
+    image: mongo-express:latest # :1.0.0-alpha.4
+    links:
+      - mongo:mongo
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017
